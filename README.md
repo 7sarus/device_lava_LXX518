@@ -11,7 +11,7 @@ Clone into an AOSP tree as `device/lava/LXX518`:
 
 ```sh
 git clone https://github.com/7sarus/device_lava_LXX518 device/lava/LXX518
-. build/envsetup.sh && lunch aosp_LXX518-trunk_staging-userdebug
+. build/envsetup.sh && lunch aosp_LXX518-ap2a-userdebug
 ```
 
 ## What is verified from the dumps
@@ -39,7 +39,7 @@ git clone https://github.com/7sarus/device_lava_LXX518 device/lava/LXX518
 
 ## TWRP
 
-`lunch twrp_LXX518-trunk_staging-eng && m bootimage` — recovery goes into `boot.img`
+`lunch twrp_LXX518-ap2a-eng && m bootimage` — recovery goes into `boot.img`
 (`BOARD_USES_RECOVERY_AS_BOOT`), because the phone has no recovery partition and its
 `boot` has no ramdisk to conflict with. CI: `.github/workflows/twrp.yml` builds
 `twrp-14.1` and uploads `boot.img`.
