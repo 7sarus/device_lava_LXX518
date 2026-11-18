@@ -64,7 +64,7 @@ jobs:
       - name: Trim unused projects
         run: |
           cd twrp
-          rm -rf cts test tools development developers sdk ndk \
+          rm -rf cts tools development developers sdk ndk \
                  prebuilts/ndk prebuilts/qemu-kernel \
                  device/generic device/google device/amlogic device/linaro device/ti device/sample
           df -h /
