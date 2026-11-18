@@ -15,7 +15,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/aosp_LXX518.mk
+    $(LOCAL_DIR)/aosp_LXX518.mk \
+    $(LOCAL_DIR)/twrp_LXX518.mk
 
 COMMON_LUNCH_CHOICES := \
-    aosp_LXX518-userdebug
+    aosp_LXX518-userdebug \
+    twrp_LXX518-eng

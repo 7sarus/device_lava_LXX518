@@ -43,10 +43,10 @@ TARGET_NO_BOOTLOADER := true
 # Boot image (verified with unpack_bootimg on boot_b)
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_PAGESIZE := 4096
-BOARD_KERNEL_IMAGE_NAME := Image
+BOARD_KERNEL_IMAGE_NAME := Image.lz4
+# Stock kernel, LZ4 compressed, taken from boot_b. No kernel is built here.
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.lz4
 TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_CLANG_COMPILE := true
-BOARD_USES_GENERIC_KERNEL_IMAGE := true
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 
 # boots a separate init_boot ramdisk, kernel lives in boot
@@ -119,5 +119,23 @@ TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/fstab.mt6878
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_USES_MKE2FS := true
 
+# TWRP: no recovery partition, so recovery ramdisk goes into boot with the kernel.
+ifneq ($(filter twrp_%,$(TARGET_PRODUCT)),)
+BOARD_USES_RECOVERY_AS_BOOT := true
+BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := false
+BOARD_AVB_ENABLE := false
+BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive
+
+TW_THEME := portrait_hdpi
+TW_DEVICE_VERSION := 1
+TW_INCLUDE_FASTBOOTD := true
+TW_INCLUDE_REPACKTOOLS := true
+TW_EXCLUDE_TWRPAPP := true
+TW_USE_TOOLBOX := true
+
+# Touch modules ship in recovery/root/lib/modules; the rest come from vendor_boot.
+TW_LOAD_VENDOR_BOOT_MODULES := true
+TW_LOAD_VENDOR_MODULES := "cs_notifier.ko pri_common_node.ko pd_dbg_info.ko tcpc_class.ko hardware_info.ko synaptics_tcm2.ko hynitron_touch.ko mediatek-drm.ko mediatek-drm-panel-drv.ko mediatek-drm-gateic.ko mtk_panel_ext.ko panel-rayle-nt37701-cmd-120hz.ko"
+endif
+
 # TODO: BOARD_SEPOLICY_DIRS, BOARD_VENDOR_SEPOLICY_DIRS
-# TODO: kernel load address / dtb offsets (vendor_boot bootconfig is empty)

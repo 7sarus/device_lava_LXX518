@@ -35,7 +35,31 @@ git clone https://github.com/7sarus/device_lava_LXX518 device/lava/LXX518
 - Proprietary vendor/odm blobs and their `proprietary-files.txt`.
 - Device-specific sepolicy.
 - Working kernel build config (`vendor_kernel_boot` + GKI fragments).
-- Recovery/TWRP device tree specifics (this tree targets AOSP bring-up only).
+- `/data` decryption in TWRP (FBE + MTK keymaster).
+
+## TWRP
+
+`lunch twrp_LXX518-eng && m bootimage` — recovery goes into `boot.img`
+(`BOARD_USES_RECOVERY_AS_BOOT`), because the phone has no recovery partition and its
+`boot` has no ramdisk to conflict with. CI: `.github/workflows/twrp.yml` builds
+`twrp-14.1` and uploads `boot.img`.
+
+Flash with verity/verification off, since the image is not AVB-signed with the LAVA key:
+
+```sh
+fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img
+fastboot flash boot boot.img
+```
+
+`prebuilt/` holds what CI cannot pull from a phone:
+
+| File | Source |
+| :--- | :--- |
+| `prebuilt/Image.lz4` | `boot_b.img` (GKI kernel, LZ4, 16.7 MB) |
+| `recovery/root/lib/modules/*.ko` | `synaptics_tcm2`, `hynitron_touch` from `/vendor_dlkm`, plus the 5 modules they depend on |
+
+Display modules (`mediatek-drm`, `panel-*`, ...) are not bundled: they are already in
+`vendor_boot`, which the bootloader loads alongside `boot`.
 
 ## Layout
 

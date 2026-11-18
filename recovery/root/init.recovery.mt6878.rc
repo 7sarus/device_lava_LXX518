@@ -1,0 +1,5 @@
+# From the stock recovery ramdisk (vendor_boot_b), minus the update_engine call:
+# that binary is not part of the TWRP ramdisk.
+on init
+    setprop sys.usb.configfs 1
+    setprop sys.usb.controller "11201000.usb0"

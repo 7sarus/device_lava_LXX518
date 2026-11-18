@@ -1,0 +1,10 @@
+# TWRP flags, merged onto the first-stage fstab by mount point.
+# Format: <mount point> <fs> <device> flags=...
+/data f2fs /dev/block/by-name/userdata flags=display="Data";wipeingui;backup=1;settingsstorage
+/metadata f2fs /dev/block/by-name/metadata flags=display="Metadata";backup=1
+/boot emmc /dev/block/by-name/boot flags=display="Boot";backup=1;flashimg=1
+/init_boot emmc /dev/block/by-name/init_boot flags=display="Init Boot";backup=1;flashimg=1
+/vendor_boot emmc /dev/block/by-name/vendor_boot flags=display="Vendor Boot";backup=1;flashimg=1
+/dtbo emmc /dev/block/by-name/dtbo flags=display="DTBO";backup=1;flashimg=1
+/persistent emmc /dev/block/by-name/frp flags=display="FRP";backup=1
+/mnt/vendor/persist ext4 /dev/block/by-name/persist flags=display="Persist";backup=1
