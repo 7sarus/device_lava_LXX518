@@ -23,12 +23,10 @@ jobs:
 
       - name: Add swap
         run: |
-          if ! sudo swapon --show | grep -q .; then
-            sudo fallocate -l 8G /swapfile || sudo dd if=/dev/zero of=/swapfile bs=1M count=8192
-            sudo chmod 600 /swapfile
-            sudo mkswap /swapfile
-            sudo swapon /swapfile
-          fi
+          sudo fallocate -l 8G /swapfile2 || sudo dd if=/dev/zero of=/swapfile2 bs=1M count=8192
+          sudo chmod 600 /swapfile2
+          sudo mkswap /swapfile2
+          sudo swapon /swapfile2
           free -g
 
       - name: Install packages
@@ -61,6 +59,14 @@ jobs:
           rsync -a --exclude .git --exclude .github tree/ twrp/device/lava/LXX518/
           # .repo holds a second copy of the whole tree (~40 GB); the build only needs the working dirs
           rm -rf twrp/.repo
+          df -h /
+
+      - name: Trim unused projects
+        run: |
+          cd twrp
+          rm -rf cts test tools development developers sdk ndk \
+                 prebuilts/ndk prebuilts/qemu-kernel \
+                 device/generic device/google device/amlogic device/linaro device/ti device/sample
           df -h /
 
       - name: Build
