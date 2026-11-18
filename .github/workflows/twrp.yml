@@ -55,7 +55,7 @@ jobs:
           cd twrp
           export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
-          lunch twrp_LXX518-eng
+          lunch twrp_LXX518-trunk_staging-eng
           m bootimage -j4
 
       - name: Upload image

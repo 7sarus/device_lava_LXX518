@@ -19,5 +19,5 @@ PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/twrp_LXX518.mk
 
 COMMON_LUNCH_CHOICES := \
-    aosp_LXX518-userdebug \
-    twrp_LXX518-eng
+    aosp_LXX518-trunk_staging-userdebug \
+    twrp_LXX518-trunk_staging-eng
