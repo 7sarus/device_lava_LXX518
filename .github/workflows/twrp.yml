@@ -21,6 +21,14 @@ jobs:
           sudo apt-get clean
           df -h /
 
+      - name: Add swap
+        run: |
+          sudo fallocate -l 8G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          free -g
+
       - name: Install packages
         run: |
           sudo apt-get update
