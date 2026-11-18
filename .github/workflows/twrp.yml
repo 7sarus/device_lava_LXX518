@@ -61,14 +61,6 @@ jobs:
           rm -rf twrp/.repo
           df -h /
 
-      - name: Trim unused projects
-        run: |
-          cd twrp
-          rm -rf cts tools ndk \
-                 prebuilts/ndk prebuilts/qemu-kernel \
-                 device/generic device/google device/amlogic device/linaro device/ti device/sample
-          df -h /
-
       - name: Build
         run: |
           cd twrp
