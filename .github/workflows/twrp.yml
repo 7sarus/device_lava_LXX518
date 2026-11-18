@@ -57,6 +57,9 @@ jobs:
         run: |
           mkdir -p twrp/device/lava
           rsync -a --exclude .git --exclude .github tree/ twrp/device/lava/LXX518/
+          # .repo holds a second copy of the whole tree (~40 GB); the build only needs the working dirs
+          rm -rf twrp/.repo
+          df -h /
 
       - name: Build
         run: |
